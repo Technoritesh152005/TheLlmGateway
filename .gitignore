@@ -34,3 +34,7 @@ build/
 .env
 mvnw
 mvnw.cmd
+
+.gitattributes
+hs_err_pid*.log
+replay_pid*.log
