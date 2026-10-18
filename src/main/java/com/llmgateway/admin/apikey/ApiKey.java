@@ -1,5 +1,7 @@
 package com.llmgateway.admin.apikey;
 
+import com.llmgateway.shared.RateLimitTier;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -9,8 +11,8 @@ public record ApiKey(
         UUID tenantId,
         String name,
         String keyPrefix,
-        // ApiKeyStatus status,
-        // RateLimitTier rateLimitTier,
+         ApiKeyStatus status,
+         RateLimitTier rateLimitTier,
         Instant expiresAt,
         Instant lastUsedAt,
         Instant createdAt,

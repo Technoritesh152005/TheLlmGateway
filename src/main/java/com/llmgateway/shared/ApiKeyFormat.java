@@ -1,35 +1,41 @@
+package com.llmgateway.shared;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
+import java.util.regex.Pattern;
 
-public final class ApiKeyFormat{
+public final class ApiKeyFormat {
 
-    public static final String Prefix = "sk-gw";
+    public static final String PREFIX = "sk-gw";
+    public static final String Prefix = PREFIX;
     public static final int SECRET_LENGTH = 43;
-    public static final int TOTAL_LENGTH = Prefix.length() + SECRET_LENGTH;
-
+    public static final int TOTAL_LENGTH = PREFIX.length() + SECRET_LENGTH;
     public static final int Display_Characters = 8;
 
-    //Pattern is a class which helps to identify regex
+    // Pattern is a class which helps to identify regex
     public static final Pattern WELL_FORMED = Pattern.compile("^" + Pattern.quote(PREFIX) + "[0-9A-Za-z]{" + SECRET_LENGTH + "}$");
 
-    //private means other class cannot call this means cannot create object of it
-    //cause to access static method u dont need obj
-    //its only that nnecesaary dont try to create object of it
-    private ApiKeyFormat(){}
+    // Private constructor so class cannot be instantiated
+    private ApiKeyFormat() {}
 
-    public static Boolean isWellFormed(String key){
-        return key != null && key.length()==TOTAL_LENGTH && WELL_FORMED.matcher(key).matches();
+    public static Boolean isWellFormed(String key) {
+        return key != null && key.length() == TOTAL_LENGTH && WELL_FORMED.matcher(key).matches();
     }
 
-    //converts the apikey in hash / hex format
-    public static String sha256hex(String key){
-        try{
-            //Messagedigest is a class which provides getInstance to get a object to calculatehash4
-            MessageDigest digest = MessageDigest.getInstance("sha256");
-            //takes bytes from key and convert in hash later in hexadecimal
-            return HexFormat.of().formatHex(digest.digest(key.getBytes(StandardCharsets.UTF_8)))
-        }catch(NoSuchAlgorithmException e ){
+    // Converts the apikey to hash / hex format
+    public static String sha256hex(String key) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            return HexFormat.of().formatHex(digest.digest(key.getBytes(StandardCharsets.UTF_8)));
+        } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("SHA-256 is guaranteed by the Java platform", e);
         }
     }
 
+    // Display prefix part of key
+    public static String displayPrefix(String key) {
+        return key.substring(0, PREFIX.length() + Display_Characters);
+    }
 }

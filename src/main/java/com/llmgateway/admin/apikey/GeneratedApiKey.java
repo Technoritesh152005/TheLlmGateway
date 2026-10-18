@@ -1,8 +1,9 @@
 package com.llmgateway.admin.apikey;
 
-record GeneratedApiKey(String plainText , String prefix , String hash){
+record GeneratedApiKey(String plainText, String prefix, String hash) {
 
-    public String toString(){
-        
+    @Override
+    public String toString() {
+        return "GeneratedApiKey[prefix=" + prefix + ", hash=" + hash + "]";
     }
 }

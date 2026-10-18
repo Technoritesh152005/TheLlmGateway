@@ -1,5 +1,7 @@
 package com.llmgateway.admin;
 
+import com.llmgateway.shared.RateLimitTier;
+
 import java.util.UUID;
 // import com.llmgateway.shared.RateLimitTier;
 import java.time.Instant;
@@ -10,7 +12,7 @@ import java.time.Instant;
 public record ApiKeyIdentity(
     UUID keyid,
     UUID tenantId,
-    // RateLimitier tier,
+     RateLimitTier tier,
     boolean Revoked,
     boolean tenantSuspended,
     Instant expiresAt
